@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
+import ColorPicker from "react-pick-color";
 
 const InputColor = () => {
   const [color, setColor] = useState("#054080");
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
+
+  const handleChange = (color: { hex: SetStateAction<string> }) =>
+    setColor(color.hex);
 
   return (
     <div>
@@ -11,11 +15,15 @@ const InputColor = () => {
         <div
           onClick={() => setDisplayColorPicker(!displayColorPicker)}
           style={{ background: color }}
-          className="w-10 h-8 cursor-pointer border-[3px] border-zinc-300"
+          className="w-11 h-9 mt-2 cursor-pointer border-[3px] border-stone-400"
         ></div>
         <span className="font-medium">{color}</span>
       </div>
-      {displayColorPicker && "ShowcolorPicker"}
+      {displayColorPicker && (
+        <div className="absolute mt-2">
+          <ColorPicker color={color} onChange={handleChange} />
+        </div>
+      )}
     </div>
   );
 };
